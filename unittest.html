@@ -13,6 +13,28 @@
     <script src="https://code.jquery.com/qunit/qunit-2.20.1.js"></script>
     <script src="validateSudokoboard.js"></script>
     <script>
+        QUnit.test('ugyldig brett, feil lengde', function (assert) {
+            // arrange
+            const sudokuboard = '12  34';
+
+            // act
+            const validation = validateSudokuboard(sudokuboard);
+
+            // assert
+            assert.equal(validation, 'ugyldig brett, feil lengde');
+        });
+
+        QUnit.test('ugyldig brett, ugyldig tegn', function (assert) {
+            // arrange
+            const sudokuboard = '12  34     z    ';
+
+            // act
+            const validation = validateSudokuboard(sudokuboard);
+
+            // assert
+            assert.equal(validation, 'ugyldig brett, ugyldig tegn');
+        });
+
         QUnit.test('delvis utfylt, ingen feil', function (assert) {
             // arrange
             const sudokuboard = '12  34          ';
