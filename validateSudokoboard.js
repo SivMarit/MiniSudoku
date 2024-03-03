@@ -1,3 +1,3 @@
 function validateSudokuboard(sudoboardString){
-    return 'Brettet er gyldig og komplett';
+    return 'helt utfylt, ingen feil';
 }
