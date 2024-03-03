@@ -1,73 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        .board{
-            display: grid;
-            grid-template-columns: repeat(4,60px);
-            grid-template-rows: repeat(4,60px);
-        }
-        .board > div {
-            border: 1px solid gray;
-            font-size: 300%;
-            text-align: center;
-        }        
-    </style>
+    <link rel="stylesheet" href="sudokuboard.css">
 </head>
+
 <body>
     <div id="app"></div>
     <script>
         // model
         const boards = [
-            '12  34          ',
-            '121 34          ',
-            '1  1 34         ',
-            '12  3  2        ',
-            '1234432143214321',
-            '1224432143214321',
-            '1234432143214322',
-            '1234432143241321',
+            '12  34          ', // delvis utfylt, ingen feil
+            '121 34          ', // delvis utfylt, samme tall to ganger på en rad
+            '12  34  1       ', // delvis utfylt, samme tall to ganger på en kolonne
+            '12  34    2    2', // delvis utfylt, samme tall to ganger i en firkant            
+            '1234341221434321', // helt utfylt, ingen feil
+            '1434321221434321', // helt utfylt, samme tall to ganger på en rad
+            '1432341221434321', // helt utfylt, samme tall to ganger på en kolonne
         ]
         let selectedBoardIndex = 0;
 
         // view
         updateView();
-        function updateView(){
+        function updateView() {
             document.getElementById('app').innerHTML = /*HTML*/`
                 <div class="board">
                     ${createSquares()}
                 </div>
-                <select onchange="">
+                <select onchange="selectBoard(this.value)">
                     ${createOptions()}
                 </select>
             `;
         }
 
-        function createOptions(){
+        function createOptions() {
             let html = '';
-            for(let index = 0; index < boards.length; index++){
+            for (let index = 0; index < boards.length; index++) {
                 const board = boards[index];
                 html += /*HTML*/`<option value="${index}">${board}</option>`;
             }
             return html;
         }
 
-        function createSquares(){
+        function createSquares() {
             const board = boards[selectedBoardIndex];
             let html = '';
-            for(let square of board){
+            for (let square of board) {
                 html += /*HTML*/`<div>${square}</div>`;
             }
             return html;
         }
 
         // controller
-        function selectBoard(index){
+        function selectBoard(index) {
             selectedBoardIndex = index;
             updateView();
         }
     </script>
 </body>
+
 </html>
