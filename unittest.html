@@ -18,10 +18,10 @@
             const sudokuboard = '12  34          ';
 
             // act
-            const isValid = isValidSudokuboard(sudokuboard);
+            const validation = validateSudokuboard(sudokuboard);
 
             // assert
-            assert.equal(isValid, true);
+            assert.equal(validation, 'delvis utfylt, ingen feil');
         });
 
         QUnit.test('delvis utfylt, samme tall to ganger på en rad', function (assert) {
@@ -29,10 +29,10 @@
             const sudokuboard = '121 34          ';
 
             // act
-            const isValid = isValidSudokuboard(sudokuboard);
+            const validation = validateSudokuboard(sudokuboard);
 
             // assert
-            assert.equal(isValid, false);
+            assert.equal(validation, 'delvis utfylt, feil i rad');
         });
 
         QUnit.test('delvis utfylt, samme tall to ganger på en kolonne', function (assert) {
@@ -40,10 +40,10 @@
             const sudokuboard = '12  34  1       ';
 
             // act
-            const isValid = isValidSudokuboard(sudokuboard);
+            const validation = validateSudokuboard(sudokuboard);
 
             // assert
-            assert.equal(isValid, false);
+            assert.equal(validation, 'delvis utfylt, feil i kolonne');
         });
 
         QUnit.test('delvis utfylt, samme tall to ganger i en firkant ', function (assert) {
@@ -51,10 +51,10 @@
             const sudokuboard = '12  34    2    2';
 
             // act
-            const isValid = isValidSudokuboard(sudokuboard);
+            const validation = validateSudokuboard(sudokuboard);
 
             // assert
-            assert.equal(isValid, false);
+            assert.equal(validation, 'delvis utfylt, feil i firkant');
         });
 
         QUnit.test('helt utfylt, ingen feil', function (assert) {
@@ -62,10 +62,10 @@
             const sudokuboard = '1234341221434321';
 
             // act
-            const isValid = isValidSudokuboard(sudokuboard);
+            const validation = validateSudokuboard(sudokuboard);
 
             // assert
-            assert.equal(isValid, true);
+            assert.equal(validation, 'helt utfylt, ingen feil');
         });
 
         QUnit.test('helt utfylt, samme tall to ganger på en rad', function (assert) {
@@ -73,10 +73,10 @@
             const sudokuboard = '1434321221434321';
 
             // act
-            const isValid = isValidSudokuboard(sudokuboard);
+            const validation = validateSudokuboard(sudokuboard);
 
             // assert
-            assert.equal(isValid, false);
+            assert.equal(validation, 'helt utfylt, feil i rad');
         });
 
         QUnit.test('helt utfylt, samme tall to ganger på en kolonne', function (assert) {
@@ -84,10 +84,10 @@
             const sudokuboard = '1432341221434321';
 
             // act
-            const isValid = isValidSudokuboard(sudokuboard);
+            const validation = validateSudokuboard(sudokuboard);
 
             // assert
-            assert.equal(isValid, false);
+            assert.equal(validation, 'helt utfylt, feil i kolonne');
         });
     </script>
 </body>
