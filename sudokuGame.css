@@ -7,9 +7,10 @@
 }
 
 .board>div {
-    border: 1px solid gray;
+    border: 1px solid lightblue;
     font-size: 300%;
     text-align: center;
+    background-color: ivory;
 }
 
 .board>div:nth-child(3),
