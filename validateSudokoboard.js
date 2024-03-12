@@ -9,60 +9,79 @@ function validateSudokuboard(sudoboardString) {
     // Check if completely filled
     let isFilled = !sudoboardString.includes(" ")
 
-    // Assign each row to a new substring
-    let row1 = sudoboardString.charAt(0) + sudoboardString.charAt(1) + sudoboardString.charAt(2) + sudoboardString.charAt(3);
-    let row2 = sudoboardString.charAt(4) + sudoboardString.charAt(5) + sudoboardString.charAt(6) + sudoboardString.charAt(7);
-    let row3 = sudoboardString.charAt(8) + sudoboardString.charAt(9) + sudoboardString.charAt(10) + sudoboardString.charAt(11);
-    let row4 = sudoboardString.charAt(12) + sudoboardString.charAt(13) + sudoboardString.charAt(14) + sudoboardString.charAt(15);
+    let rows = getRows(sudoboardString)
+    let columns = getColumns(sudoboardString)
+    let boxes = getBoxes(sudoboardString)
 
-    // Assign each column to a new substring
-    let column1 = sudoboardString.charAt(0) + sudoboardString.charAt(4) + sudoboardString.charAt(8) + sudoboardString.charAt(12);
-    let column2 = sudoboardString.charAt(1) + sudoboardString.charAt(5) + sudoboardString.charAt(9) + sudoboardString.charAt(13);
-    let column3 = sudoboardString.charAt(2) + sudoboardString.charAt(6) + sudoboardString.charAt(10) + sudoboardString.charAt(14);
-    let column4 = sudoboardString.charAt(3) + sudoboardString.charAt(7) + sudoboardString.charAt(11) + sudoboardString.charAt(15);
+    let boxesValid = isArrayValid(boxes)
+    let columnsValid = isArrayValid(columns)
+    let rowsValid = isArrayValid(rows)
+    let allValid = false;
+    if (boxesValid && columnsValid && rowsValid) {
+        console.log('All are valid.')
+        allValid = true;
+    }
 
-    // Assign each box to new substrings
-    let box1 = sudoboardString.charAt(0) + sudoboardString.charAt(1) + sudoboardString.charAt(4) + sudoboardString.charAt(5);
-    let box2 = sudoboardString.charAt(2) + sudoboardString.charAt(3) + sudoboardString.charAt(6) + sudoboardString.charAt(7);
-    let box3 = sudoboardString.charAt(8) + sudoboardString.charAt(9) + sudoboardString.charAt(12) + sudoboardString.charAt(13);
-    let box4 = sudoboardString.charAt(10) + sudoboardString.charAt(11) + sudoboardString.charAt(14) + sudoboardString.charAt(15);
+    console.log(boxesValid + columnsValid + rowsValid)
 
     // Check if Partially filled and no errors
-    if (!isFilled && isSubStringValid(row1) && isSubStringValid(row2) && isSubStringValid(row3) && isSubStringValid(row4) &&
-        isSubStringValid(box1) && isSubStringValid(box2) && isSubStringValid(box3) && isSubStringValid(box4) &&
-        isSubStringValid(column1) && isSubStringValid(column2) && isSubStringValid(column3) && isSubStringValid(column4)) return 'delvis utfylt, ingen feil';
-
+    if (!isFilled && allValid) return 'delvis utfylt, ingen feil';
 
     // Check if rows are valid & partially filled
-    if ((!isFilled) && (!isSubStringValid(row1) || !isSubStringValid(row2) || !isSubStringValid(row3) || !isSubStringValid(row4))) return 'delvis utfylt, feil i rad';
-
+    if (!isFilled && !rowsValid) return 'delvis utfylt, feil i rad';
 
     // Check if columns are valid & partially filled
-    if ((!isFilled) && (!isSubStringValid(column1) || !isSubStringValid(column2) || !isSubStringValid(column3) || !isSubStringValid(column4))) return 'delvis utfylt, feil i kolonne';
-
+    if (!isFilled && !columnsValid) return 'delvis utfylt, feil i kolonne';
 
     // Check if boxes are valid
-    if ((!isFilled) && (!isSubStringValid(box1) || !isSubStringValid(box2) || !isSubStringValid(box3) || !isSubStringValid(box4))) return 'delvis utfylt, feil i firkant';
-
+    if (!isFilled && !boxesValid) return 'delvis utfylt, feil i firkant';
 
     // Check if completely filled and two numbers in row
-    if ((isFilled) && (!isSubStringValid(row1) || !isSubStringValid(row2) || !isSubStringValid(row3) || !isSubStringValid(row4))) return 'helt utfylt, feil i rad'
+    if (isFilled && !rowsValid) return 'helt utfylt, feil i rad';
 
-    
     // Check if completely filled and two numbers in column
-    if ((isFilled) && (!isSubStringValid(column1) || !isSubStringValid(column2) || !isSubStringValid(column3) || !isSubStringValid(column4))) return 'helt utfylt, feil i kolonne'
+    if (isFilled && !columnsValid) return 'helt utfylt, feil i kolonne';
 
-
-    return 'helt utfylt, ingen feil'
-}
-
-
-// A function for checking if two duplicate numbers exist in a row
-function isSubStringValid(subString) {
-    return !hasRepeats(subString)
+    // Completely filled and no errors
+    return 'helt utfylt, ingen feil';
 }
 
 // A function for checking if a given string has repeated characters
 function hasRepeats(str) {
-    return /(.).*\1/.test(str.replaceAll(" ",""));
+    return /(.).*\1/.test(str.replaceAll(" ", ""));
+}
+
+function getRows(sudokuString) {
+    // Assign each row to a new substring
+    let one = sudokuString.charAt(0) + sudokuString.charAt(1) + sudokuString.charAt(2) + sudokuString.charAt(3);
+    let two = sudokuString.charAt(4) + sudokuString.charAt(5) + sudokuString.charAt(6) + sudokuString.charAt(7);
+    let three = sudokuString.charAt(8) + sudokuString.charAt(9) + sudokuString.charAt(10) + sudokuString.charAt(11);
+    let four = sudokuString.charAt(12) + sudokuString.charAt(13) + sudokuString.charAt(14) + sudokuString.charAt(15);
+
+    return [one, two, three, four]
+}
+
+function getColumns(sudokuString) {
+    // Assign each column to a new substring
+    let one = sudokuString.charAt(0) + sudokuString.charAt(4) + sudokuString.charAt(8) + sudokuString.charAt(12);
+    let two = sudokuString.charAt(1) + sudokuString.charAt(5) + sudokuString.charAt(9) + sudokuString.charAt(13);
+    let three = sudokuString.charAt(2) + sudokuString.charAt(6) + sudokuString.charAt(10) + sudokuString.charAt(14);
+    let four = sudokuString.charAt(3) + sudokuString.charAt(7) + sudokuString.charAt(11) + sudokuString.charAt(15);
+
+    return [one, two, three, four]
+}
+
+function getBoxes(sudokuString) {
+    // Assign each box to new substrings
+    let one = sudokuString.charAt(0) + sudokuString.charAt(1) + sudokuString.charAt(4) + sudokuString.charAt(5);
+    let two = sudokuString.charAt(2) + sudokuString.charAt(3) + sudokuString.charAt(6) + sudokuString.charAt(7);
+    let three = sudokuString.charAt(8) + sudokuString.charAt(9) + sudokuString.charAt(12) + sudokuString.charAt(13);
+    let four = sudokuString.charAt(10) + sudokuString.charAt(11) + sudokuString.charAt(14) + sudokuString.charAt(15);
+    
+    return [one, two, three, four]
+}
+
+function isArrayValid(stringArray) {
+    if (hasRepeats(stringArray[0]) || hasRepeats(stringArray[1]) || hasRepeats(stringArray[2]) || hasRepeats(stringArray[3])) return false
+    else return true
 }
