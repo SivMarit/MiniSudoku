@@ -1,13 +1,13 @@
 function validateSudokuboard(sudoboardString) {
 
 
-    //ugyldig brett, feil lengde DONE
+    //ugyldig brett, feil lengde DONE!!!
     if (sudoboardString.length !== 16) return 'ugyldig brett, feil lengde';
 
     //ugyldig brett, ugyldig tegn
-    if (!'12 34') return 'ugyldig brett, ugyldig tegn';
+    'ugyldig brett, ugyldig tegn';
 
-    //delvis utfylt, ingen feil DONE
+    //delvis utfylt, ingen feil DONE!!!
     if (!sudoboardString.includes('123434122143321')) return 'delvis utfylt, ingen feil';
 
     //delvis utfylt, samme tall to ganger på en rad DONE
@@ -19,15 +19,23 @@ function validateSudokuboard(sudoboardString) {
     //delvis utfylt, samme tall to ganger i en firkant
     'delvis utfylt, feil i firkant';
 
-    //helt utfylt, ingen feil
-    if (!sudoboardString.includes(' ')||('123434122143321')) return 'helt utfylt, ingen feil';
+    //helt utfylt, ingen feil DONE??
+    if (sudoboardString.includes('123434122143321')) return 'helt utfylt, ingen feil';
 
     //helt utfylt, samme tall to ganger på en rad'
-    for (let i = 0; i < 4; i++) {
-        if (!validateSudokuboard(sudoboardString)) return 'helt utfylt, feil i rad';
+    for (let numberInRow = 1; numberInRow <= 4; numberInRow++) {
+        if (sudoboardString.includes(numberInRow.repeat(2))) {
+            return 'delvis utfylt, feil i rad';
+        }
     }
+    return 'helt utfylt, feil i rad';
+
     //helt utfylt, samme tall to ganger på en kolonne
-    if (sudoboardString(column[1, 2, 3, 4])) return 'delvis utfylt, feil i kolonne';
+    for (let numberInCol = 1; numberInCol <= 4; numberInCol++) {
+        if (sudoboardString.includes(numberInCol.repeat(2)))
+            ;
+    }
+    return 'delvis utfylt, feil i kolonne';
 }
 
 // hvis ingen feil
