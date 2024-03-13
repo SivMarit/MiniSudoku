@@ -10,7 +10,7 @@
 <body>
     <div id="app"></div>
     <script>
-        // model
+        // model (inneholder datastrukturen og logikken for brettet)
         const boards = [
             '12  34          ', // delvis utfylt, ingen feil
             '121 34          ', // delvis utfylt, samme tall to ganger på en rad
@@ -22,7 +22,7 @@
         ]
         let selectedBoardIndex = 0;
 
-        // view
+        // view (viser sudoku-brettet og lar brukeren interagere med det)
         updateView();
         function updateView() {
             document.getElementById('app').innerHTML = /*HTML*/`
@@ -53,7 +53,7 @@
             return html;
         }
 
-        // controller
+        // controller (håndterer brukerens interaksjon og oppdaterer model og view)
         function selectBoard(index) {
             selectedBoardIndex = index;
             updateView();
