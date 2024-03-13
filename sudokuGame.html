@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="sudokuGame.css">
+    <title>Mini Sudoku Game</title>
 </head>
 
 <body>
@@ -19,7 +20,7 @@
             '1234341221434321', // helt utfylt, ingen feil
             '1434321221434321', // helt utfylt, samme tall to ganger på en rad
             '1432341221434321', // helt utfylt, samme tall to ganger på en kolonne
-        ]
+        ];
         let selectedBoardIndex = 0;
 
         // view (viser sudoku-brettet og lar brukeren interagere med det)
@@ -32,6 +33,8 @@
                 <select onchange="selectBoard(this.value)">
                     ${createOptions()}
                 </select>
+                <button onclick="checkRightOrWrong()">SJEKK RIKTIG ELLER FEIL</button>
+                <button onclick="restart"()>RESTART</button>
             `;
         }
 
@@ -44,18 +47,51 @@
             return html;
         }
 
-        function createSquares() {
+        function createSquares() { //har endret funksjonen slik at den viser tomme felter som tekst(nummer)inndata i stedet for enkle div'er, slik at brukeren kan fylle inn tallene selv. Har gitt input-feltene klassen "square" for stylingformål.
             const board = boards[selectedBoardIndex];
             let html = '';
             for (let square of board) {
-                html += /*HTML*/`<div>${square}</div>`;
+                if (square === ' ') {
+                    html += '<input type="number" maxlength="1" class="square" oninput="validateInput(this)">';
+                } else {
+                    html += /*HTML*/`<div class="square">${square}</div>`;
+                }
+
             }
             return html;
         }
 
+
+
+        // function createSquares() {
+        //     const board = boards[selectedBoardIndex];
+        //     let html = '';
+        //     for (let square of board) {
+        //         html += /*HTML*/`<div>${square}</div>`;
+        //     }
+        //     return html;
+        // }
+
+
+
+
         // controller (håndterer brukerens interaksjon og oppdaterer model og view)
         function selectBoard(index) {
             selectedBoardIndex = index;
+            updateView();
+        }
+
+        function validateInput(input) {
+            const value = input.value;
+            if (value !== ' ' && !/^[1234]$/.test(value)) {
+                input.value = ' ';
+            }
+        }
+
+        // function checkRightOrWrong()
+
+        function restart() { //tilbakestiller brettet til utgangspunkt
+            selectedBoardIndex = 0;
             updateView();
         }
     </script>
