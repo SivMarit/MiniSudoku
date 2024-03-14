@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku-solver</title>
+    <style>
+        .allsite {
+            display: grid;
+            grid-template-columns: 450px 100px 450px;
+        }
+
+        .boardUnsolved {
+            width: 450px;
+            height: 450px;
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+        }
+
+        .boardSolved {
+            width: 450px;
+            height: 450px;
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+        }
+
+        .house {
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+            border: solid black 2px;
+        }
+
+        .cells {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: solid black 1px;
+            background-color: rgb(218, 203, 181);
+            font-size: 200%;
+        }
+        .inputfelt {
+            border: none;
+            background-color: rgb(218, 203, 181);
+            width: 100%;
+            font-size: 100%;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;           
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="allsite">
+        <div id="unsolvedBrett" class="boardUnsolved"></div>
+        <div></div>
+        <div id="solvedBrett" class="boardSolved"></div>
+        <div style="display:flex; justify-content: center; margin-top: 5px;"><button onclick="goToSolve()">Løys</button></div>
+    </div>
+
+    <script>
+        buildHouses('unsolvedBrett','house')
+        buildCells('house','inputCell')
+        function buildHouses(idOuter,idInner) {
+            for (let i = 0; i < 9; i++) {
+                document.getElementById(idOuter).innerHTML += /*HTML*/ `
+                    <div class="house" id="${idInner+(i+1)}"></div>
+                `
+            }
+        }
+        function buildCells(idOuter,idInner) {
+            for (let i = 0; i < 9; i++) {
+                for (let j = 0; j < 9; j++) {
+                    if (idOuter=='house') {
+                        document.getElementById(idOuter + (i + 1)).innerHTML += /*HTML*/`
+                        <div class="cells">
+                            <input class="inputfelt" type="number" id="${idInner}${3 * Math.floor(i / 3) + 1 + Math.floor(j / 3)}${3 * (i % 3) + 1 + (j % 3)}">
+                        </div>
+                    `
+                    }
+                    else {
+                        document.getElementById(idOuter + (i + 1)).innerHTML += /*HTML*/`
+                        <div class="cells" id="${idInner}${3 * Math.floor(i / 3) + 1 + Math.floor(j / 3)}${3 * (i % 3) + 1 + (j % 3)}"></div>
+                    `
+                    }
+                }
+            }
+        }        
+        function readBoard() {
+            let unsolvedBoard=[];
+            for (let i=0;i<9;i++) {
+                let unsolvedRow=[];
+                for (let j=0;j<9;j++) {
+                    unsolvedRow.push(document.getElementById('inputCell'+(i+1)+''+(j+1)).valueAsNumber || 0)
+                }
+                unsolvedBoard.push(unsolvedRow)
+            }
+            return unsolvedBoard
+        }        
+        function isNumberInRow(theBoard,theNumber,rowNumber) {
+            for (let i=0;i<9;i++) {
+                if (theBoard[rowNumber][i]==theNumber) {
+                    return true
+                }
+            }
+            return false
+        }
+        function isNumberInColumn(theBoard,theNumber,columnNumber) {
+            for (let i=0;i<9;i++) {
+                if (theBoard[i][columnNumber]==theNumber) {
+                    return true
+                }
+            }
+            return false
+        }
+        function isNumberInBox(theBoard,theNumber,rowNumber,columnNumber) {
+            let startRow = rowNumber - rowNumber%3
+            let startColumn = columnNumber - columnNumber%3
+            for (let i=0;i<3;i++) {
+                for (let j=0;j<3;j++) {
+                    if (theBoard[startRow+i][startColumn+j]==theNumber) {
+                        return true
+                    }
+                }
+            }
+            return false
+        }
+        function isValidPlacement(theBoard,theNumber,rowNumber,columnNumber) {
+            return !isNumberInRow(theBoard,theNumber,rowNumber) && !isNumberInColumn(theBoard,theNumber,columnNumber) && !isNumberInBox(theBoard,theNumber,rowNumber,columnNumber)
+        }
+        function theSolver(board) {
+            for (let row=0;row<9;row++) {
+                for (let column=0;column<9;column++) {
+                    if (board[row][column]==0) {
+                        for (let tryNumber=1;tryNumber<=9;tryNumber++) {
+                            if (isValidPlacement(board,tryNumber,row,column)) {
+                                board[row][column] = tryNumber
+                                if (theSolver(board)) {
+                                    return true
+                                }
+                                else {
+                                    board[row][column] = 0
+                                }
+                            }
+                        }
+                        return false
+                    }
+                }
+            }
+            return true
+        }        
+        function printBoard(brettet) {
+            buildHouses('solvedBrett','houseFinish')
+            buildCells('houseFinish','solvedCell')
+            for (let i=0;i<9;i++) {
+                for (let j=0;j<9;j++) {
+                    document.getElementById('solvedCell'+(i+1)+''+(j+1)).innerHTML = brettet[i][j]
+                }
+            }
+        }
+        function goToSolve() {
+            let enteredBoard = readBoard()
+            if (enteredBoardIsValid(enteredBoard)) {
+                if (theSolver(enteredBoard)) {
+                    printBoard(enteredBoard)
+                }
+                else {
+                    document.getElementById('solvedBrett').innerHTML = 'Denne sudokuen kan ikkje løysast'
+                }
+            }
+            else {
+                document.getElementById('solvedBrett').innerHTML = 'Det er noko feil med det du skreiv inn. Du har plassert same tal i ei rad, kolonne eller boks (minst) ein gong.'
+            }
+        }
+        function enteredBoardIsValid(board) {
+            for (let i=0;i<9;i++) {
+                for (let j=0;j<9;j++) {
+                    if (board[i][j] !=0 && (enteredRow(board,board[i][j],i) || enteredColumn(board,board[i][j],j) || enteredBox(board,board[i][j],i,j))) {
+                        return false
+                    }
+                }
+            }
+            return true
+        }
+        function enteredRow(board,theNumber,rowNumber) {
+            let counter = 0
+            for (let i=0;i<9;i++) {
+                if (board[rowNumber][i]==theNumber) {
+                    counter ++
+                }
+            }
+            if (counter>1) {
+                return true
+            }
+            else {
+                return false
+            }
+        }
+        function enteredColumn(board,theNumber,columnNumber) {
+            let counter = 0
+            for (let i=0;i<9;i++) {
+                if (board[i][columnNumber]==theNumber) {
+                    counter ++
+                }
+            }
+            if (counter>1) {
+                return true
+            }
+            else {
+                return false
+            }
+        }
+        function enteredBox(board,theNumber,rowNumber,columnNumber) {
+            let counter = 0
+            let rowStart = rowNumber - rowNumber%3
+            let columnStart = columnNumber - columnNumber%3
+            for (let i=0;i<3;i++) {
+                for (let j=0;j<3;j++) {
+                    if (board[rowStart+i][columnStart+j]==theNumber) {
+                        counter ++
+                    }
+                }
+            }
+            if (counter>1) {
+                return true
+            }
+            else {
+                return false
+            }
+        }                   
+    </script>
+</body>
+
+</html>
