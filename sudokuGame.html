@@ -11,17 +11,23 @@
 <body>
     <div id="app"></div>
     <script>
-        // model (inneholder datastrukturen og logikken for brettet)
-        const boards = [
-            '12  34          ', // delvis utfylt, ingen feil
-            '121 34          ', // delvis utfylt, samme tall to ganger på en rad
-            '12  34  1       ', // delvis utfylt, samme tall to ganger på en kolonne
-            '12  34    2    2', // delvis utfylt, samme tall to ganger i en firkant            
-            '1234341221434321', // helt utfylt, ingen feil
-            '1434321221434321', // helt utfylt, samme tall to ganger på en rad
-            '1432341221434321', // helt utfylt, samme tall to ganger på en kolonne
-        ];
+        let boards = [];
         let selectedBoardIndex = 0;
+        function initiateBoard() {
+            // model (inneholder datastrukturen og logikken for brettet)
+            boards = [
+                '12  34          ', // delvis utfylt, ingen feil
+                '121 34          ', // delvis utfylt, samme tall to ganger på en rad
+                '12  34  1       ', // delvis utfylt, samme tall to ganger på en kolonne
+                '12  34    2    2', // delvis utfylt, samme tall to ganger i en firkant            
+                '1234341221434321', // helt utfylt, ingen feil
+                '1434321221434321', // helt utfylt, samme tall to ganger på en rad
+                '1432341221434321', // helt utfylt, samme tall to ganger på en kolonne
+            ];
+
+        }
+
+        initiateBoard();
 
         // view (viser sudoku-brettet og lar brukeren interagere med det)
         updateView();
@@ -34,9 +40,78 @@
                     ${createOptions()}
                 </select>
                 <button onclick="checkRightOrWrong()">SJEKK RIKTIG ELLER FEIL</button>
-                <button onclick="restart"()>RESTART</button>
+                <button onclick="restart()">RESTART</button>
             `;
         }
+
+        function restart() {
+            updateView();
+            boards[selectedBoardIndex] = boards[selectedBoardIndex].replace(/[1-4]/g, ' '); // Replace all numbers with empty spaces
+            initiateBoard(); //kaller på brettet på nytt --> initiate
+        }
+
+
+        function checkSudoku(board) {
+            // Check rows
+            for (let i = 0; i < 4; i++) {
+                const row = board[i];
+                if (!isUnique(row)) {
+                    return false; // If any row has duplicates, return false
+                }
+            }
+
+            // Check columns
+            for (let i = 0; i < 4; i++) {
+                const column = [];
+                for (let j = 0; j < 4; j++) {
+                    column.push(board[j][i]);
+                }
+                if (!isUnique(column)) {
+                    return false; // If any column has duplicates, return false
+                }
+            }
+
+            // Check 2x2 boxes
+            for (let i = 0; i < 4; i += 2) {
+                for (let j = 0; j < 4; j += 2) {
+                    const box = [];
+                    for (let k = i; k < i + 2; k++) {
+                        for (let l = j; l < j + 2; l++) {
+                            box.push(board[k][l]);
+                        }
+                    }
+                    if (!isUnique(box)) {
+                        return false; // If any 2x2 box has duplicates, return false
+                    }
+                }
+            }
+
+            return true; // If all checks pass, return true
+        }
+
+        function isUnique(arr) {
+            const seen = {};
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] !== ' ' && seen[arr[i]]) { 
+                    console.log/arr[i]
+                    return false; // If a value is seen again, it's not unique
+                }
+                seen[arr[i]] = true;
+            }
+            return true; // All values are unique
+        }
+
+        function checkRightOrWrong() {
+            const squares = document.querySelectorAll('.square');
+            const board = Array.from(squares).map(square => square.value || ' '); // Convert input values to an array representing the board
+
+            if (checkSudoku(board)) {
+                alert('Congratulations! You solved the Sudoku puzzle.'); // If the Sudoku is correct, show a success message
+            } else {
+                alert('Sorry, the Sudoku solution is incorrect.'); // If the Sudoku is incorrect, show an error message
+            }
+        }
+
 
         function createOptions() {
             let html = '';
@@ -62,17 +137,6 @@
         }
 
 
-        // function createSquares() {
-        //     const board = boards[selectedBoardIndex];
-        //     let html = '';
-        //     for (let square of board) {
-        //         html += /*HTML*/`<div>${square}</div>`;
-        //     }
-        //     return html;
-        // }
-
-
-
 
         // controller (håndterer brukerens interaksjon og oppdaterer model og view)
         function selectBoard(index) {
@@ -85,15 +149,11 @@
             if (value !== ' ' && !/^[1234]$/.test(value)) {
                 input.value = ' ';
             }
-            
+
         }
 
-        // function checkRightOrWrong()
 
-        function restart() { //tilbakestiller brettet til utgangspunkt
-            selectedBoardIndex = 0;
-            updateView();
-        }
+
     </script>
 </body>
 
