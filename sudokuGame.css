@@ -1,9 +1,13 @@
-.kropp {
+.skeleton {
     display: grid;
     justify-content: center;
     overflow: scroll;
     margin-top: 100px;
-    background-color: rgb(245, 226, 179);
+    /* background-color: rgb(245, 226, 179); */
+    background-image: url(img/trendy\ childish\ sticker\ by\ freeject.svg);
+    background-size: 70%;
+    background-position: 50%;
+    
 }
 
 .board {
@@ -14,18 +18,30 @@
     justify-content: center;
     margin-top: 100px;
     padding: 10px;
-    margin: 20px;
+    margin: 40px;
     border: 1px solid black;
     grid-template-columns: repeat(4, 60px);
     grid-template-rows: repeat(4, 60px);
     font-family: Arial, Helvetica, sans-serif;
     font-size: 10pt;
     color: rgb(63, 93, 105);
-    background-color: rgb(63, 93, 105);
+    background-color: rgb(249, 249, 231);
     border: solid rgb(39, 59, 67) 10px;
     border-radius: 3%;
+    box-shadow: 0px 1px 10px 10px rgba(94, 46, 7, 0.200);
+
 }
 
+.app {
+    width: 350px;
+    height: 510px;
+    border: solid rgb(39, 59, 67) 10px;
+    border-radius: 3%;
+    background-color: rgb(255, 142, 44);
+    display: grid;
+    justify-content: center;
+    box-shadow: 0px 0px 25px 0px rgb(54, 33, 4);
+}
 
 
 #buttons {
@@ -34,42 +50,43 @@
 }
 
 #rightWrong {
-
-    height: 70px;
-    width: 70px;
+    height: 90px;
+    width: 100px;
     padding: 10px;
-    margin: 20px;
+    margin-right: 20px;
+    margin-bottom: 35px;
     justify-content: center;
     background-color: beige;
     border: solid rgb(63, 93, 105) 5px;
     border-radius: 10%;
-    font-size: 40%;
+    font-size: 90%;
     color: rgb(63, 93, 105);
-
+    box-shadow: 0px 0px 0px 5px rgb(42, 51, 48);
 }
 
 #restart {
-    height: 70px;
-    width: 70px;
+    height: 90px;
+    width: 100px;
     padding: 10px;
-    margin: 20px;
+    margin-left: 20px;
+
     justify-content: center;
     background-color: beige;
     border: solid rgb(63, 93, 105) 5px;
     border-radius: 10%;
-    font-size: 40%;
+    font-size: 90%;
     color: rgb(63, 93, 105);
-
+    box-shadow: 0px 0px 0px 5px rgb(42, 51, 48);
 }
 
 
 .board>div {
-    border: 1px solid rgb(236, 184, 79);
+    /* border: 1px solid rgb(236, 184, 79); */
     font-size: 300%;
     text-align: center;
-    background-color: ivory;
+    background: none;
     justify-content: center;
-    color:rgb(42, 51, 48);
+    color: rgb(42, 51, 48);
 
 }
 
@@ -80,7 +97,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: ivory;
+    background: none;
+    /* background-color: ivory; */
     color: color rgb(42, 51, 48);
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -164,5 +182,3 @@
     border-right: 2px solid rgb(39, 59, 67);
     border-bottom: 2px solid rgb(39, 59, 67);
 }
-
-
