@@ -36,7 +36,7 @@
                 <div class="board">
                     ${createSquares()}
                 </div>
-             <!--   <select onchange="selectBoard(this.value)">
+             <!--   <select onchange="selectBoard(this.value)">     //drop-downmenyen som var der i utgangspunktet, men som jeg tok vekk for sluttresultatets del i selve spillet
                     ${createOptions()}
                     updateView();
                 </select>-->
@@ -120,6 +120,7 @@
                 board[5] = 4
 
                 for (let number of sudokuBoard) {
+                    
                     if (typeof parseInt(number) === 'number') board.push(parseInt(number.trim(), 10) || " "); // Using parseInt() to convert string to number
                     // Or:
                     // board.push(+value); // Using unary plus operator to convert string to number
@@ -133,9 +134,13 @@
                 }
 
                 if (checkSudoku(board2)) {
-                    alert('Congratulations! You solved the Sudoku puzzle.'); // If the Sudoku is correct, show a success message
+                    alert('Congratulations! You solved the Sudoku puzzle.');
+                    const board2=document.getElementById('boards2');
+                    boards.style.color='green';
                 } else {
-                    alert('Sorry, the Sudoku solution is incorrect.'); // If the Sudoku is incorrect, show an error message
+                    const boards2=document.getElementById('boards2');
+                    boards2.style.color='red';
+                    alert('Sorry, the Sudoku solution is incorrect.');
                 }
             }
 
