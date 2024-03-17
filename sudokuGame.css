@@ -3,7 +3,7 @@
     justify-content: center;
     overflow: scroll;
     margin-top: 100px;
-    /* background-color: rgb(245, 226, 179); */
+    /* background-color: rgb(245, 226, 179); if backgroundpicture doesn't appreal, enable this color */
     background-image: url(img/trendy\ childish\ sticker\ by\ freeject.svg);
     background-size: 70%;
     background-position: 50%;
@@ -81,7 +81,6 @@
 
 
 .board>div {
-    /* border: 1px solid rgb(236, 184, 79); */
     font-size: 300%;
     text-align: center;
     background: none;
@@ -98,23 +97,22 @@
     align-items: center;
     justify-content: center;
     background: none;
-    /* background-color: ivory; */
     color: color rgb(42, 51, 48);
     font-family: Arial, Helvetica, sans-serif;
 }
 
 .board>div:nth-child(1) {
-    border-left: solid rgb(39, 59, 67) 2px;
-    border-top: solid rgb(39, 59, 67) 2px;
+    border-left: solid rgb(39, 59, 67) 3px;
+    border-top: solid rgb(39, 59, 67) 3px;
 }
 
 .board>div:nth-child(2) {
-    border-top: solid rgb(39, 59, 67) 2px;
+    border-top: solid rgb(39, 59, 67) 3px;
     border-right: solid rgb(39, 59, 67) 2px;
 }
 
 .board>div:nth-child(5) {
-    border-left: solid rgb(39, 59, 67) 2px;
+    border-left: solid rgb(39, 59, 67) 3px;
     border-bottom: solid rgb(39, 59, 67) 2px;
 }
 
@@ -125,12 +123,12 @@
 
 .board>input:nth-child(3) {
     border-left: 2px solid rgb(39, 59, 67);
-    border-top: 2px solid rgb(39, 59, 67);
+    border-top: 3px solid rgb(39, 59, 67);
 }
 
 .board>input:nth-child(4) {
-    border-top: 2px solid rgb(39, 59, 67);
-    border-right: 2px solid rgb(39, 59, 67);
+    border-top: 3px solid rgb(39, 59, 67);
+    border-right: 3px solid rgb(39, 59, 67);
 }
 
 .board>input:nth-child(7) {
@@ -139,13 +137,13 @@
 }
 
 .board>input:nth-child(8) {
-    border-right: 2px solid rgb(39, 59, 67);
+    border-right: 3px solid rgb(39, 59, 67);
     border-bottom: solid rgb(39, 59, 67) 2px;
 }
 
 .board>input:nth-child(9) {
     border-top: 2px solid rgb(39, 59, 67);
-    border-left: 2px solid rgb(39, 59, 67);
+    border-left: 3px solid rgb(39, 59, 67);
 }
 
 .board>input:nth-child(10) {
@@ -160,25 +158,25 @@
 
 .board>input:nth-child(12) {
     border-top: 2px solid rgb(39, 59, 67);
-    border-right: 2px solid rgb(39, 59, 67);
+    border-right: 3px solid rgb(39, 59, 67);
 }
 
 .board>input:nth-child(13) {
-    border-left: 2px solid rgb(39, 59, 67);
-    border-bottom: 2px solid rgb(39, 59, 67);
+    border-left: 3px solid rgb(39, 59, 67);
+    border-bottom: 3px solid rgb(39, 59, 67);
 }
 
 .board>input:nth-child(14) {
     border-right: 2px solid rgb(39, 59, 67);
-    border-bottom: 2px solid rgb(39, 59, 67);
+    border-bottom: 3px solid rgb(39, 59, 67);
 }
 
 .board>input:nth-child(15) {
     border-left: 2px solid rgb(39, 59, 67);
-    border-bottom: 2px solid rgb(39, 59, 67);
+    border-bottom: 3px solid rgb(39, 59, 67);
 }
 
 .board>input:nth-child(16) {
-    border-right: 2px solid rgb(39, 59, 67);
-    border-bottom: 2px solid rgb(39, 59, 67);
+    border-right: 3px solid rgb(39, 59, 67);
+    border-bottom: 3px solid rgb(39, 59, 67);
 }

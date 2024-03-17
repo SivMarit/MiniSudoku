@@ -16,29 +16,29 @@
 
 
         function initiateBoard() {
-            // MODEL // (inneholder datastrukturen og logikken for brettet)
+            // MODEL // (contains data structure and logic for the board)
             boards = [
                 '12  34          ', // delvis utfylt, ingen feil
-                '121 34          ', // delvis utfylt, samme tall to ganger på en rad
-                '12  34  1       ', // delvis utfylt, samme tall to ganger på en kolonne
-                '12  34    2    2', // delvis utfylt, samme tall to ganger i en firkant            
-                '1234341221434321', // helt utfylt, ingen feil
-                '1434321221434321', // helt utfylt, samme tall to ganger på en rad
-                '1432341221434321', // helt utfylt, samme tall to ganger på en kolonne
+                // '121 34          ', // delvis utfylt, samme tall to ganger på en rad
+                // '12  34  1       ', // delvis utfylt, samme tall to ganger på en kolonne
+                // '12  34    2    2', // delvis utfylt, samme tall to ganger i en firkant            
+                // '1234341221434321', // helt utfylt, ingen feil
+                // '1434321221434321', // helt utfylt, samme tall to ganger på en rad
+                // '1432341221434321', // helt utfylt, samme tall to ganger på en kolonne
             ];
 
         }
 
         initiateBoard();
 
-        // VIEW // (viser sudoku-brettet og lar brukeren interagere med det)
+        // VIEW // (shows Sudoku board and lets user interact with it)
         updateView();
         function updateView() {
             document.getElementById('app').innerHTML = /*HTML*/`
                 <div id="board" class="board">
                     ${createSquares()}
                 </div>
-              <!--<select onchange="selectBoard(this.value)">     //drop-downmenyen som var der i utgangspunktet, men som jeg tok vekk for sluttresultatets del i selve spillet
+              <!--<select onchange="selectBoard(this.value)">     //the drop-downmenu for the unittesting
                     ${createOptions()}
                     updateView();
                 </select>-->
@@ -53,13 +53,13 @@
 
         function restart() {
             updateView();
-            boards[selectedBoardIndex] = boards[selectedBoardIndex].replace(/[1-4]/g, ' '); // Replace all numbers with empty spaces
-            initiateBoard(); //kaller på brettet på nytt --> initiate
+            boards[selectedBoardIndex] = boards[selectedBoardIndex].replace(/[1-4]/g, ' '); // Replaces all numbers with spaces
+            initiateBoard(); //calls the board/initiates all over
         }
 
 
         function checkSudoku(board) {
-            // Check rows
+            // Checking rows in board
             for (let i = 0; i < 4; i++) {
                 const row = board[i];
                 if (!isUnique(row)) {
@@ -67,7 +67,7 @@
                 }
             }
 
-            // Check columns
+            // Checking columns in board
             for (let i = 0; i < 4; i++) {
                 const column = [];
                 for (let j = 0; j < 4; j++) {
@@ -78,7 +78,7 @@
                 }
             }
 
-            // Check 2x2 boxes
+            // Check 2x2 boxes in board (bigger squares)
             for (let i = 0; i < 4; i += 2) {
                 for (let j = 0; j < 4; j += 2) {
                     const box = [];
@@ -93,7 +93,7 @@
                 }
             }
 
-            return true; // If all checks pass, return true
+            return true; // If checks pass, return true
         }
 
         function isUnique(arr) {
@@ -109,14 +109,14 @@
         }
 
         function checkRightOrWrong() {
-            const boardString = boards[selectedBoardIndex]; // Få den initielle brettstrengen
+            const boardString = boards[selectedBoardIndex]; // Get the initial board string
 
-            // Konverter brettstrengen til en array
+            // Converts board string to an array
             const board = boardString.split('').map(char => {
                 if (char === ' ') {
-                    return ' '; // La tomme celler være tomme
+                    return ' '; // Lets empty cells stay empty
                 } else {
-                    return parseInt(char); // Konverter nummeriske tegn til tall
+                    return parseInt(char); // Converts numeric signs to numbers
                 }
             });
 
@@ -127,12 +127,12 @@
             for (let i = 0; i < userInputs.length; i++) {
                 const userInput = userInputs[i];
                 if (userInput && !isNaN(userInput)) {
-                    const index = i % 4 + Math.floor(i / 4) * 4; // Beregn riktig indeks i den flate brettarrayen
+                    const index = i % 4 + Math.floor(i / 4) * 4; // Calculates correct index to the flat board array
                     board[index] = parseInt(userInput); // updates board with user indata
                 }
             }
 
-            // Del opp brettet i 4x4 rutenett
+            // Divide board into 4x4 squares
             const board2 = [];
             for (let i = 0; i < board.length; i += 4) {
                 board2.push(board.slice(i, i + 4));
@@ -140,59 +140,19 @@
 
             var boardElement = document.getElementById('board');
             if (checkSudoku(board2)) {
-                boardElement.style.backgroundColor = 'rgb(23, 221, 115)'; // Endre bakgrunnsfargen til grønn
+                boardElement.style.backgroundColor = 'rgb(23, 221, 115)';
                 setTimeout(function(){
                     alert('Congratulations! You solved the Sudoku puzzle.');
                 },100);
                 
             } else {
-                boardElement.style.backgroundColor = 'rgb(243, 121, 110)'; // Endre bakgrunnsfargen til rød
+                boardElement.style.backgroundColor = 'rgb(243, 121, 110)';
                 setTimeout(function () {
                     alert('Sorry, the Sudoku solution is incorrect.');
                 }, 100);
             }
             console.log('Board:', board); // Log the board array to the console (for debugging)
         }
-
-        // // __________
-        // function checkRightOrWrong() {
-        //     const board = []; // Array to hold the values of the Sudoku board
-        //     const nodeList = document.querySelectorAll('.square');
-
-
-
-        //     const sudokuBoard = Array.from(nodeList).map(element => element.value);  //henter ut informasjonen fra brettet
-
-        //     console.log(sudokuBoard); // Using Array.from()
-
-        //     board[0] = 1
-        //     board[1] = 2
-        //     board[4] = 3
-        //     board[5] = 4
-
-        //     for (let number of sudokuBoard) {
-        //         if (typeof parseInt(number) === 'number') board.push(parseInt(number.trim(), 10) || " "); // Using parseInt() to convert string to number
-        //         // Or:
-        //         // board.push(+value); // Using unary plus operator to convert string to number
-        //     }
-
-        //     console.log('Board:', board); // Log the board array to the console (for debugging)
-
-        //     const board2 = [];
-        //     for (let i = 0; i < board.length; i += 4) {
-        //         board2.push(board.slice(i, i + 4));
-        //     }
-
-        //     if (checkSudoku(board2)) {
-        //         alert('Congratulations! You solved the Sudoku puzzle.');
-
-        //     } else {
-        //         alert('Sorry, the Sudoku solution is incorrect.');
-        //     }
-        // }
-
-
-        // __________
 
 
         function createOptions() {
@@ -206,7 +166,7 @@
             return html;
         }
 
-        function createSquares() { //har endret funksjonen slik at den viser tomme felter som tekst(nummer)inndata i stedet for enkle div'er, slik at brukeren kan fylle inn tallene selv. Har gitt input-feltene klassen "square" for stylingformål.
+        function createSquares() {
             const board = boards[selectedBoardIndex];
 
             // console.log("createSquares" + board);
@@ -224,7 +184,7 @@
             return html;
         }
 
-        // controller (håndterer brukerens interaksjon og oppdaterer model og view)
+        // controller (handles user interaction and updates model and view)
         function selectBoard(index) {
             selectedBoardIndex = index;
             updateView();
@@ -237,8 +197,6 @@
             }
 
         }
-
-
 
     </script>
 
